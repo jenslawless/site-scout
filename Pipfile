@@ -8,6 +8,13 @@ flask = "*"
 sqlalchemy = "*"
 python-dotenv = "*"
 requests = "*"
+psycopg2 = "*"
+psycopg2-binary = "*"
+flask-sqlalchemy = "*"
+flask-cors = "*"
+flask-migrate = "*"
+flask-restful = "*"
+flask-bcrypt = "*"
 
 [dev-packages]
 

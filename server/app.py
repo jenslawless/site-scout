@@ -2,11 +2,18 @@ from flask import Flask, request, jsonify
 import requests
 import os
 from dotenv import load_dotenv
+from flask_sqlalchemy import SQLAlchemy
+from config import db, bcrypt
 
 
 app = Flask(__name__)
-print("Loading .env file...")
 load_dotenv()
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+bcrypt.init_app(app)
 
 API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 ORS_API_KEY=os.environ.get('ORS_API_KEY')
