@@ -1,22 +1,13 @@
 from flask import Flask, request, jsonify
 import requests
+from config import db, app, api
 import os
-from dotenv import load_dotenv
-from flask_sqlalchemy import SQLAlchemy
-from config import db, bcrypt
+from models import *
 
-
-app = Flask(__name__)
-load_dotenv()
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db.init_app(app)
-bcrypt.init_app(app)
 
 API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 ORS_API_KEY=os.environ.get('ORS_API_KEY')
+
 
 @app.route('/geocode', methods=['GET'])
 def geocode_address():

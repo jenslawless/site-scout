@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bd440a1a0abc280329ff97f59a2478fce4c6cad286a8cf9576f8fcc83a10d576"
+            "sha256": "b658cb09d428b030306ccf369a3ad0ee7f90f79fa9f2836b212677ea026e41db"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -211,6 +211,14 @@
             "index": "pypi",
             "version": "==3.0.5"
         },
+        "geoalchemy2": {
+            "hashes": [
+                "sha256:0830c98f83d6b1706e62b5544793d304e2853493d6e70ac18444c13748c3d1c7",
+                "sha256:620b31cbf97a368b2486dbcfcd36da2081827e933d4163bcb942043b79b545e8"
+            ],
+            "index": "pypi",
+            "version": "==0.14.1"
+        },
         "greenlet": {
             "hashes": [
                 "sha256:03a8f4f3430c3b3ff8d10a2a86028c660355ab637cee9333d63d66b56f09d52a",
@@ -381,6 +389,14 @@
             "markers": "python_version >= '3.7'",
             "version": "==2.1.3"
         },
+        "packaging": {
+            "hashes": [
+                "sha256:994793af429502c4ea2ebf6bf664629d07c1a9fe974af92966e4b8d2df7edc61",
+                "sha256:a392980d2b6cffa644431898be54b0045151319d1e7ec34f0cfed48767dd334f"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==23.1"
+        },
         "psycopg2": {
             "hashes": [
                 "sha256:11aca705ec888e4f4cea97289a0bf0f22a067a32614f6ef64fcf7b8bfbc53744",
@@ -545,6 +561,13 @@
             ],
             "index": "pypi",
             "version": "==2.0.19"
+        },
+        "sqlalchemy-serializer": {
+            "hashes": [
+                "sha256:c4cf3e3eebbffa5b46a77ddb886230e5d8c17fd0b9ddbd57eed1a837eb1463cc"
+            ],
+            "index": "pypi",
+            "version": "==1.4.1"
         },
         "typing-extensions": {
             "hashes": [
