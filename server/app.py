@@ -13,7 +13,8 @@ ORS_API_KEY=os.environ.get('ORS_API_KEY')
 
 class GeocodeAddress(Resource):
     def get(self):
-        address = request.args.get('address')
+        address = '505 24th Street Denver, CO, 80205'
+        # request.args.get('address')   
         
         if not address:
             return {'error': 'Address parameter is missing.'}, 400
