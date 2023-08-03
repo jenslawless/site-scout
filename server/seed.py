@@ -218,11 +218,6 @@ center = sample_response['features'][0]['properties']['center']
 flat_coordinates = [f"{lon} {lat}" for lon, lat in coordinates[0]]
 wkt_coordinates = f"POLYGON(({', '.join(flat_coordinates + [flat_coordinates[0]])}))"
 
-# geojson_string = {
-#     "type": "Polygon",
-#     "coordinates": coordinates
-# }
-
 new_address = Address(isochrone=wkt_coordinates, user_id=1, address='505 24th Street', center=f"POINT({center[0]} {center[1]})")
 
 

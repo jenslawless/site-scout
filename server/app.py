@@ -4,6 +4,9 @@ from config import db, app, api
 import os
 from models import *
 from flask_restful import Api, Resource
+import time
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import insert, text, create_engine
 
 app = Flask(__name__)
 api = Api(app)
@@ -11,11 +14,18 @@ api = Api(app)
 API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 ORS_API_KEY=os.environ.get('ORS_API_KEY')
 
+DATABASE_URI = 'postgresql://jenslaw:Mandy007!@localhost:5432/site_scout_1'
+engine = create_engine(DATABASE_URI)
+Session = sessionmaker(bind=engine)
+session = Session()
+
 class GeocodeAddress(Resource):
-    def get(self):
-        address = '505 24th Street Denver, CO, 80205'
-        # request.args.get('address')   
-        
+    def post(self):
+        data = request.get_json()
+        address = data.get('address')   
+        travel_time = data.get('time')
+        print(travel_time)
+
         if not address:
             return {'error': 'Address parameter is missing.'}, 400
         
@@ -29,6 +39,8 @@ class GeocodeAddress(Resource):
         
         if response.status_code == 200:
             data = response.json()
+            print(data)
+            print(travel_time)
             lat = data['results'][0]['geometry']['location']['lat']
             lng = data['results'][0]['geometry']['location']['lng']
 
@@ -40,21 +52,34 @@ class GeocodeAddress(Resource):
 
             body = {
                     'locations': [[lng, lat]],
-                    'range': [300],  
+                    'range': [travel_time], 
                     'range_type': 'time'
             }
 
             ors_base_url = 'https://api.openrouteservice.org/v2/isochrones/driving-car'
             ors_response = requests.post(ors_base_url, json=body, headers=headers)
 
+            time.sleep(1)
+
             if ors_response.status_code == 200:
                 ors_data = ors_response.json() 
-                return ors_data
+                
+                center_point = ors_data['features'][0]['properties']['center']
+                polygon_coordinates = ors_data['features'][0]['geometry']['coordinates']
+                flat_coordinates = [f"{lon} {lat}" for lon, lat in polygon_coordinates[0]]
+                wkt_coordinates = f"POLYGON(({', '.join(flat_coordinates + [flat_coordinates[0]])}))"
+
+                new_address = Address(isochrone=wkt_coordinates, user_id=1, address=address, center=f"POINT({center_point[0]} {center_point[1]})")
+
+                session.add(new_address)
+                session.commit()
+                session.close()
+
             else:
                 return {'error': 'Error fetching isochrone data.'}, 500
         else:
             return {'error': 'Error fetching geolocation data.'}, 500
-
+        
 api.add_resource(GeocodeAddress, '/geocode')
 
 if __name__ == '__main__':

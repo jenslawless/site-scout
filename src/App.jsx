@@ -15,23 +15,15 @@ function App() {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <BrowserRouter>
         <NavBar />
-        <header>
-          <nav>
-            <h1>Site Scout</h1>
-            <NavLink to="/">Home</NavLink>
-            <br></br>
-            <NavLink to="my-maps">My Maps</NavLink>
-            <br></br>
-            <NavLink to="create-new">Create a New Map</NavLink>
-          </nav>
-        </header>
-        <main>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path='/my-maps' element={<MyMaps />} />
-            <Route path='/create-new' element={<NewMap />} />
-          </Routes>
-        </main>
+        <div style={{ marginTop: 80 }}>
+          <main>
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path='/my-maps' element={<MyMaps />} />
+              <Route path='/create-new' element={<NewMap />} />
+            </Routes>
+          </main>
+        </div>
       </BrowserRouter>
     </div>
   )
