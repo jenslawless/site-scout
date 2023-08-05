@@ -17,6 +17,9 @@ flask-restful = "*"
 flask-bcrypt = "*"
 sqlalchemy-serializer = "*"
 geoalchemy2 = "*"
+shapely = "*"
+shapely-geojson = "*"
+geojson = "*"
 
 [dev-packages]
 

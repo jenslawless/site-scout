@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 import requests
 from config import db, app, api
 import os
@@ -7,9 +7,11 @@ from flask_restful import Api, Resource
 import time
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import insert, text, create_engine
+from geoalchemy2 import functions
+from geoalchemy2.shape import to_shape, from_shape
+from shapely_geojson import dumps, Feature
+from geojson import Feature, Polygon
 
-app = Flask(__name__)
-api = Api(app)
 
 API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 ORS_API_KEY=os.environ.get('ORS_API_KEY')
@@ -24,7 +26,7 @@ class GeocodeAddress(Resource):
         data = request.get_json()
         address = data.get('address')   
         travel_time = data.get('time')
-        print(travel_time)
+
 
         if not address:
             return {'error': 'Address parameter is missing.'}, 400
@@ -39,8 +41,7 @@ class GeocodeAddress(Resource):
         
         if response.status_code == 200:
             data = response.json()
-            print(data)
-            print(travel_time)
+
             lat = data['results'][0]['geometry']['location']['lat']
             lng = data['results'][0]['geometry']['location']['lng']
 
@@ -73,14 +74,43 @@ class GeocodeAddress(Resource):
 
                 session.add(new_address)
                 session.commit()
+
+                new_isochrone_id = new_address.id
+
                 session.close()
+
+                response_data = {
+                    'id': new_isochrone_id,
+                }
+
+                return response_data, 200
 
             else:
                 return {'error': 'Error fetching isochrone data.'}, 500
         else:
             return {'error': 'Error fetching geolocation data.'}, 500
         
+
+
+class RetrieveAddress(Resource):
+    def get(self, id):
+        single_address = Address.query.filter_by(id=id).first()
+        if single_address:
+            shapely_geom = to_shape(single_address.isochrone)
+
+            geojson_feature = Feature(geometry=Polygon(shapely_geom.exterior.coords))
+
+            geojson = dumps(geojson_feature)
+            return geojson, 200
+        else:
+            return jsonify({"error": "map not found"}), 400
+
+
+
+
+        
 api.add_resource(GeocodeAddress, '/geocode')
+api.add_resource(RetrieveAddress, '/geocode/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

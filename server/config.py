@@ -17,7 +17,7 @@ load_dotenv()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://jenslaw:Mandy007!@localhost:5432/site_scout_1'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
+# app.json.compact = False
 
 metadata = MetaData(naming_convention={
     "ix": "ix_%(column_0_label)s",
