@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
-import { TileLayer, Marker, Polygon, Popup } from 'react-leaflet';
+import { TileLayer, Marker, Polygon, Popup, MapContainer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const MapView = ({ coordinates }) => {
+const MapView = ({ coordinates, center }) => {
 
-  const findPolygonCenter = (coords) => {
-    const len = coords.length;
-    const center = coords.reduce(
-      (acc, [lng, lat]) => [acc[0] + lng / len, acc[1] + lat / len],
-      [0, 0]
-    );
-    return center;
-  };
+  const mapCenter = center
+  const purpleOptions = { color: 'purple' }
 
-  const mapCenter = findPolygonCenter(coordinates);
+  function switchCoordinatePositions(coords) {
+    const switchedCoords = [];
+
+    for (let i = 0; i < coords.length; i++) {
+      const [lng, lat] = coords[i];
+      switchedCoords.push([lat, lng]);
+    }
+
+    return switchedCoords;
+  }
+
+  const switchedPolygon = switchCoordinatePositions(coordinates);
+  const switchedCenter = switchCoordinatePositions(mapCenter)
 
   return (
-    <MapContainer center={mapCenter} zoom={13} style={{ height: '400px', width: '100%' }}>
+
+    <MapContainer center={switchedCenter} zoom={13} style={{ height: '400px', width: '100%', justifyContent: "center" }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Polygon positions={coordinates} />
+      <Polygon pathOptions={purpleOptions} positions={switchedPolygon} />
     </MapContainer>
   );
 };

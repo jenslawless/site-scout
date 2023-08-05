@@ -11,6 +11,7 @@ from geoalchemy2 import functions
 from geoalchemy2.shape import to_shape, from_shape
 from shapely_geojson import dumps, Feature
 from geojson import Feature, Polygon
+import geoalchemy2
 
 
 API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
@@ -71,16 +72,23 @@ class GeocodeAddress(Resource):
                 wkt_coordinates = f"POLYGON(({', '.join(flat_coordinates + [flat_coordinates[0]])}))"
 
                 new_address = Address(isochrone=wkt_coordinates, user_id=1, address=address, center=f"POINT({center_point[0]} {center_point[1]})")
-
+                
                 session.add(new_address)
                 session.commit()
 
+                get_center = new_address.center
+                center_shape = geoalchemy2.shape.to_shape(get_center)
+                center_coords = (center_shape.x, center_shape.y)
+
                 new_isochrone_id = new_address.id
+                new_center = center_coords
+                print(new_center)
 
                 session.close()
 
                 response_data = {
                     'id': new_isochrone_id,
+                    'center': new_center
                 }
 
                 return response_data, 200

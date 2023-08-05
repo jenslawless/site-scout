@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-// import MapView from './MapView'
+import MapView from './MapView'
 import { useState, useEffect } from 'react'
 
 const validationSchema = Yup.object().shape({
@@ -12,16 +12,21 @@ const validationSchema = Yup.object().shape({
 
 export default function AddressForm() {
     const [coordinates, setCoordinates] = useState(null)
-    // const [newIsoId, setNewIsoId] = useState(null)
+    const [newCenter, setNewCenter] = useState(null)
 
     const handleSubmit = async (values) => {
         try {
             const payload = { address: values.address, time: values.time }; // Create an object with "address" key
             const response = await axios.post('/api/geocode', payload);
             const cur_id = response.data.id
+            console.log(response.data)
+            const cur_center = response.data.center
             const map_data = await axios.get(`/api/geocode/${cur_id}`)
-            console.log(map_data.data.geometry)
-            // setCoordinates(map_data.data.geometry.coordinates)
+            const mapDataObj = JSON.parse(map_data.data);
+            const coordinates = mapDataObj.geometry.coordinates;
+            setCoordinates(coordinates);
+            setNewCenter(cur_center)
+            console.log(newCenter)
 
         } catch (error) {
             console.log(error);
@@ -30,11 +35,8 @@ export default function AddressForm() {
     };
 
     useEffect(() => {
-        console.log(coordinates);
-    }, [coordinates]);
-
-    console.log(coordinates)
-
+        console.log(newCenter);
+    }, [newCenter]);
 
     return (
         <>
@@ -59,7 +61,7 @@ export default function AddressForm() {
                     <button type="submit" onClick={handleSubmit}>Submit</button>
                 </Form>
             </Formik>
-            {/* <MapView coordinates={coordinates} /> */}
+            <MapView coordinates={coordinates} center={newCenter} />
         </>
     );
 };
