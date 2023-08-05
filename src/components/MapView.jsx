@@ -12,19 +12,34 @@ const MapView = ({ coordinates, center }) => {
   function switchCoordinatePositions(coords) {
     const switchedCoords = [];
 
-    for (let i = 0; i < coords.length; i++) {
-      const [lng, lat] = coords[i];
-      switchedCoords.push([lat, lng]);
+    for (const key in coords) {
+      const coordinatePair = coords[key];
+      if (
+        Array.isArray(coordinatePair) &&
+        coordinatePair.length === 2 &&
+        typeof coordinatePair[0] === "number" &&
+        typeof coordinatePair[1] === "number"
+      ) {
+        const [lng, lat] = coordinatePair;
+        switchedCoords.push([lat, lng]);
+      }
     }
 
     return switchedCoords;
   }
 
+  function switchSingleCoordinate(coordinate) {
+    if (Array.isArray(coordinate) && coordinate.length === 2) {
+      const [lng, lat] = coordinate;
+      return [lat, lng];
+    }
+    return coordinate;
+  }
+
   const switchedPolygon = switchCoordinatePositions(coordinates);
-  const switchedCenter = switchCoordinatePositions(mapCenter)
+  const switchedCenter = switchSingleCoordinate(mapCenter)
 
   return (
-
     <MapContainer center={switchedCenter} zoom={13} style={{ height: '400px', width: '100%', justifyContent: "center" }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -36,5 +51,4 @@ const MapView = ({ coordinates, center }) => {
 };
 
 export default MapView;
-
 
