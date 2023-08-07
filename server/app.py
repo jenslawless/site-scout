@@ -28,7 +28,6 @@ class GeocodeAddress(Resource):
         address = data.get('address')   
         travel_time = data.get('time')
 
-
         if not address:
             return {'error': 'Address parameter is missing.'}, 400
         
@@ -40,6 +39,10 @@ class GeocodeAddress(Resource):
         base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
         response = requests.get(base_url, params=params)
         
+        # # i think this is causing the error 
+        # "Did not work, try again" 
+        # because it is expecting both api calls to come back 
+        # as successful but the second one hasn't been initiated yet. 
         if response.status_code == 200:
             data = response.json()
 
