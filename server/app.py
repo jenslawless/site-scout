@@ -10,8 +10,12 @@ from sqlalchemy import insert, text, create_engine
 from geoalchemy2 import functions
 from geoalchemy2.shape import to_shape, from_shape
 from shapely_geojson import dumps, Feature
-from geojson import Feature, Polygon
+from geojson import Feature, Polygon, FeatureCollection
 import geoalchemy2
+from geoalchemy2.functions import ST_AsText
+from shapely.wkb import loads as wkb_loads
+from shapely.wkt import loads as wkt_loads
+from shapely import wkt
 
 
 API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
@@ -40,7 +44,7 @@ class GeocodeAddress(Resource):
         base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
         response = requests.get(base_url, params=params)
         
-        # # i think this is causing the error 
+        # # i think this is causing the error   
         # "Did not work, try again" 
         # because it is expecting both api calls to come back 
         # as successful but the second one hasn't been initiated yet. 
@@ -116,9 +120,40 @@ class RetrieveAddress(Resource):
         else:
             return jsonify({"error": "map not found"}), 400
 
-        
+
+class GetUserMaps(Resource):
+    def get(self, user_id):
+        user_maps = Address.query.filter(Address.user_id == user_id).all()
+
+        if user_maps:
+            maps_data = []
+            for user_map in user_maps:
+                center_point_wkb = user_map.center
+                center_point_shapely = to_shape(center_point_wkb)
+                formatted_center = [(center_point_shapely.x), (center_point_shapely.y)]
+
+                isochrone_wkb = user_map.isochrone
+                isochrone_shapely = to_shape(isochrone_wkb)
+                isochrone_coordinates = isochrone_shapely.exterior.coords
+                formatted_coordinates = [[lon, lat] for lon, lat in isochrone_coordinates]
+
+                maps_data.append({
+                    "id": user_map.id,
+                    "user_id": user_map.user_id,
+                    "address": user_map.address,
+                    "center": formatted_center,
+                    "isochrone": formatted_coordinates,
+                    "time_range": user_map.time_range
+                })            
+
+            return maps_data
+
+        else:
+            return jsonify({"error": "No maps found for this user"}), 400
+
 api.add_resource(GeocodeAddress, '/geocode')
 api.add_resource(RetrieveAddress, '/geocode/<int:id>')
+api.add_resource(GetUserMaps, '/maps/<string:user_id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

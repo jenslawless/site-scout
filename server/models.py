@@ -9,15 +9,6 @@ from sqlalchemy.dialects.postgresql import ARRAY
 
 from config import db, bcrypt
 
-
-# class User(db.Model, SerializerMixin):
-#     __tablename__ = "users"
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     username = db.Column(db.String)
-#     _password_hash = db.Column(db.String)
-
-
 class Address(db.Model, SerializerMixin):
     __tablename__ = "addresses"
 
@@ -51,6 +42,14 @@ class Address(db.Model, SerializerMixin):
         }
         return geojson
 
+
+
+# class User(db.Model, SerializerMixin):
+#     __tablename__ = "users"
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String)
+#     _password_hash = db.Column(db.String)
 
 # class SavedMaps(db.Model, SerializerMixin):
 

@@ -6,6 +6,9 @@ import 'leaflet/dist/leaflet.css';
 
 const MapView = ({ coordinates, center }) => {
 
+  console.log(coordinates)
+  console.log(center)
+
   const mapCenter = center
   const purpleOptions = { color: 'purple' }
 
@@ -40,7 +43,7 @@ const MapView = ({ coordinates, center }) => {
   const switchedCenter = switchSingleCoordinate(mapCenter)
 
   return (
-    <MapContainer center={switchedCenter} zoom={13} style={{ height: '400px', width: '100%', justifyContent: "center" }}>
+    <MapContainer className='map-container' center={switchedCenter} zoom={11}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -51,4 +54,7 @@ const MapView = ({ coordinates, center }) => {
 };
 
 export default MapView;
+
+
+// style={{ height: '400px', width: '100%', justifyContent: "center" }}
 
