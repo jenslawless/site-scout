@@ -27,6 +27,7 @@ class GeocodeAddress(Resource):
         data = request.get_json()
         address = data.get('address')   
         travel_time = data.get('time')
+        get_user = data.get('user_id')
 
         if not address:
             return {'error': 'Address parameter is missing.'}, 400
@@ -74,7 +75,7 @@ class GeocodeAddress(Resource):
                 flat_coordinates = [f"{lon} {lat}" for lon, lat in polygon_coordinates[0]]
                 wkt_coordinates = f"POLYGON(({', '.join(flat_coordinates + [flat_coordinates[0]])}))"
 
-                new_address = Address(isochrone=wkt_coordinates, user_id=1, address=address, center=f"POINT({center_point[0]} {center_point[1]})")
+                new_address = Address(time_range=[travel_time], isochrone=wkt_coordinates, user_id=get_user, address=address, center=f"POINT({center_point[0]} {center_point[1]})")
                 
                 session.add(new_address)
                 session.commit()
@@ -85,7 +86,6 @@ class GeocodeAddress(Resource):
 
                 new_isochrone_id = new_address.id
                 new_center = center_coords
-                print(new_center)
 
                 session.close()
 
@@ -115,9 +115,6 @@ class RetrieveAddress(Resource):
             return geojson, 200
         else:
             return jsonify({"error": "map not found"}), 400
-
-
-
 
         
 api.add_resource(GeocodeAddress, '/geocode')

@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import MapView from './MapView'
 import { useState, useEffect } from 'react'
+import { useUser } from "@clerk/clerk-react";
 
 const validationSchema = Yup.object().shape({
     address: Yup.string().required('Please enter an address'),
@@ -14,10 +15,15 @@ export default function AddressForm() {
     const [coordinates, setCoordinates] = useState(null)
     const [newCenter, setNewCenter] = useState(null)
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+    const { isLoaded, isSignedIn, user } = useUser();
+
+    if (!isLoaded || !isSignedIn) {
+        return null;
+    }
 
     const handleSubmit = async (values) => {
         try {
-            const payload = { address: values.address, time: values.time }; // Create an object with "address" key
+            const payload = { address: values.address, time: values.time, user_id: user.id };
             const response = await axios.post('/api/geocode', payload);
             const cur_id = response.data.id
             const cur_center = response.data.center

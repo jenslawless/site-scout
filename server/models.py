@@ -10,22 +10,23 @@ from sqlalchemy.dialects.postgresql import ARRAY
 from config import db, bcrypt
 
 
-class User(db.Model, SerializerMixin):
-    __tablename__ = "users"
+# class User(db.Model, SerializerMixin):
+#     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String)
-    _password_hash = db.Column(db.String)
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String)
+#     _password_hash = db.Column(db.String)
 
 
 class Address(db.Model, SerializerMixin):
     __tablename__ = "addresses"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.String)
     address = db.Column(db.String)
     center = db.Column(Geometry('POINT', srid=4326))
     isochrone = db.Column(Geometry('POLYGON', srid=4326))
+    time_range = db.Column(ARRAY(db.Integer))
 
     def to_dict(self):
         data = SerializerMixin.to_dict(self)
@@ -49,6 +50,19 @@ class Address(db.Model, SerializerMixin):
             "coordinates": [list(map(json_serializable, to_shape(polygon).exterior.coords))]
         }
         return geojson
+
+
+# class SavedMaps(db.Model, SerializerMixin):
+
+#     __tablename__ = "saved_maps"
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.String)
+#     address = db.Column(db.String)
+#     center = db.Column(Geometry('POINT', srid=4326))
+#     isochrone = db.Column(Geometry('POLYGON', srid=4326))
+#     time_chosen = db.Column(db.Integer)
+
 
 
 

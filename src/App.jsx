@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -15,7 +15,8 @@ import {
   SignIn,
   SignUp,
   UserButton,
-  SignOutButton
+  SignOutButton,
+  ClerkLoaded
 } from "@clerk/clerk-react";
 
 if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
@@ -25,6 +26,7 @@ if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
 const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 function App() {
+
   return (
     <ClerkProvider publishableKey={clerkPubKey}>
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>

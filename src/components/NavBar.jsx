@@ -16,12 +16,10 @@ import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
 import { useUser, UserButton, useAuth, SignOutButton, useClerk } from "@clerk/clerk-react";
 
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const { user, isLoaded } = useUser();
+    const { isLoaded, isSignedIn, user } = useUser();
     const { sessionId } = useAuth();
 
     const handleOpenNavMenu = (event) => {
@@ -39,7 +37,9 @@ function ResponsiveAppBar() {
         setAnchorElUser(null);
     };
 
-    console.log(user)
+    if (!isLoaded || !isSignedIn) {
+        return null;
+    }
 
     return (
         <Box display="flex">
