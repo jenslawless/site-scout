@@ -119,6 +119,19 @@ class RetrieveAddress(Resource):
             return geojson, 200
         else:
             return jsonify({"error": "map not found"}), 400
+        
+    
+    def delete(self, id):
+        try:
+            map_to_delete = Address.query.get(id)
+            if map_to_delete:
+                db.session.delete(map_to_delete)
+                db.session.commit()
+                return {"message": "Map deleted successfully"}, 200
+            else:
+                return {"error": "Map not found"}, 404
+        except Exception as e:
+            return {"error": str(e)}, 500
 
 
 class GetUserMaps(Resource):
@@ -150,6 +163,8 @@ class GetUserMaps(Resource):
 
         else:
             return jsonify({"error": "No maps found for this user"}), 400
+        
+
 
 api.add_resource(GeocodeAddress, '/geocode')
 api.add_resource(RetrieveAddress, '/geocode/<int:id>')

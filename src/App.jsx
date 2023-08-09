@@ -29,7 +29,7 @@ function App() {
 
   return (
     <ClerkProvider publishableKey={clerkPubKey}>
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'center', alignItems: 'center' }}>
         <BrowserRouter>
           <SignedIn>
             <NavBar />

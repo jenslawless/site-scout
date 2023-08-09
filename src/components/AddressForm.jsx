@@ -5,6 +5,17 @@ import axios from 'axios';
 import MapView from './MapView'
 import { useState, useEffect } from 'react'
 import { useUser } from "@clerk/clerk-react";
+import { Button, TextField, Select, MenuItem, Grid, Typography, Card, Container, Box } from '@mui/material';
+
+const drivingDistanceOptions = [
+    { value: '300', label: '5 minutes' },
+    { value: '600', label: '10 minutes' },
+    { value: '900', label: '15 minutes' },
+    { value: '1200', label: '20 minutes' },
+    { value: '1800', label: '30 minutes' },
+    { value: '2400', label: '40 minutes' },
+];
+
 
 const validationSchema = Yup.object().shape({
     address: Yup.string().required('Please enter an address'),
@@ -41,7 +52,10 @@ export default function AddressForm() {
     };
 
     return (
-        <>
+        <Card sx={{ padding: 3 }}>
+            <Typography variant="h4" align="center" gutterBottom>
+                Address Form
+            </Typography>
             <Formik
                 initialValues={{
                     address: '',
@@ -51,22 +65,39 @@ export default function AddressForm() {
                 onSubmit={handleSubmit}
             >
                 <Form>
-                    <Field type="text" name="address" placeholder="Address" />
-                    <Field as="select" name="time">
-                        <option value="choose">Choose a driving distance...</option>
-                        <option value="300">5 minutes</option>
-                        <option value="600">10 minutes</option>
-                        <option value="900">15 minutes</option>
-                        <option value="1200">20 minutes</option>
-                        <option value="1800">30 minutes</option>
-                        <option value="2400">40 minutes</option>
+                    <Field
+                        as={TextField}
+                        type="text"
+                        name="address"
+                        label="Address"
+                        fullWidth
+                        variant="outlined"
+                        margin="normal"
+                    />
+                    <Field
+                        as={Select}
+                        name="time"
+                        label="Time"
+                        variant="outlined"
+                        margin="normal"
+                        sx={{ width: '100%' }}
+                    >
+                        {drivingDistanceOptions.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
                     </Field>
-                    <button type="submit" onClick={handleSubmit}>Submit</button>
+                    <Box sx={{ mt: 2 }}>
+                        <Button type="submit" variant="contained" color="primary" fullWidth>
+                            Submit
+                        </Button>
+                    </Box>
                 </Form>
             </Formik>
             {isFormSubmitted && (
                 <MapView coordinates={coordinates} center={newCenter} />
             )}
-        </>
+        </Card>
     );
-};
+}

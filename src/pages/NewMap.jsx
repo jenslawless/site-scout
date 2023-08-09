@@ -9,7 +9,6 @@ export default function NewMap() {
 
     return (
         <>
-            <div>NewMap</div>
             <AddressForm />
         </>
     )

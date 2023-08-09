@@ -6,9 +6,6 @@ import 'leaflet/dist/leaflet.css';
 
 const MapView = ({ coordinates, center }) => {
 
-  console.log(coordinates)
-  console.log(center)
-
   const mapCenter = center
   const purpleOptions = { color: 'purple' }
 

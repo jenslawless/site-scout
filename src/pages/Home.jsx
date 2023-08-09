@@ -11,10 +11,10 @@ export default function Home() {
 
     return (
         <div className="mainContainer">
-            <div className={"titleContainer"}>
+            <div className="titleContainer">
                 <div>Welcome!</div>
             </div>
-            <div>
+            <div className="contentContainer">
                 This is the home page.
             </div>
         </div>

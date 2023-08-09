@@ -1,26 +1,45 @@
-.custom-app-bar {
-  width: 100%;
-  text-align: center;
-}
-
-.custom-app-bar .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-  justify-content: left;
-}
-
-.custom-app-bar .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.custom-app-bar .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
 .map-container {
   margin: 20px;
   height: 400px;
   width: 400px;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Vertically center content */
+  align-items: center;
+  /* Horizontally center content */
+  min-height: 100vh;
+}
+
+.titleContainer {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  /* Add some spacing between title and content */
+}
+
+.contentContainer {
+  font-size: 18px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  /* Just for visualization, you can change this */
+}
+
+.delete-button {
+  background-color: rgb(86, 123, 84);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
