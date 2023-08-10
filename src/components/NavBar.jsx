@@ -16,6 +16,7 @@ import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
 import { useUser, UserButton, useAuth, SignOutButton, useClerk } from "@clerk/clerk-react";
 
 
+
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -44,7 +45,7 @@ function ResponsiveAppBar() {
     return (
         <AppBar className="custom-app-bar" sx={{ width: '100%', backgroundColor: '#53917E', height: '100px' }}>
             <Toolbar>
-                <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                <Avatar src="./src/assets/logo.png" sx={{ display: { xs: 'none', md: 'flex' }, mr: 3 }} />
                 <Typography
                     variant="h6"
                     noWrap
@@ -110,10 +111,9 @@ function ResponsiveAppBar() {
                         letterSpacing: '.3rem',
                         color: 'inherit',
                         textDecoration: 'none',
-                        marginRight: 'auto',  // Push the logo to the far left
+                        marginRight: 'auto',
                     }}
                 >
-                    LOGO
                 </Typography>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     <Button component={NavLink} to='/my-maps' sx={{ marginTop: 'auto', marginBottom: 'auto', color: 'white', display: 'block', fontSize: '17px' }}>My Maps</Button>

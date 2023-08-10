@@ -46,6 +46,11 @@ const MapView = ({ coordinates, center }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       <Polygon pathOptions={purpleOptions} positions={switchedPolygon} />
+      <Marker position={switchedCenter}>
+        <Popup>
+          This is the location you entered.
+        </Popup>
+      </Marker>
     </MapContainer>
   );
 };

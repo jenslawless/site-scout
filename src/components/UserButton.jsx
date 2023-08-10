@@ -10,7 +10,7 @@ const UserButton = () => {
 
             sx={{
 
-                alignItems: 'center', // Center vertically
+                alignItems: 'center',
                 color: 'white',
             }}
         >

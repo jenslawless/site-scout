@@ -43,3 +43,44 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+}
+
+.titleContainer {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.contentContainer {
+  max-width: 800px;
+  text-align: justify;
+  line-height: 1.5;
+}
+
+ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.startButton {
+  background-color: #53917E;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+  margin-left: 350px;
+}
+
+.startButton:hover {
+  background-color: #447164;
+}
