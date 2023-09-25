@@ -1,4 +1,5 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Site Scout: a website designed to help business owners compare property addresses for potential new brick-and-mortar locations. 
+
 
 ## Getting Started
 
