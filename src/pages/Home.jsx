@@ -22,7 +22,7 @@ export default function Home() {
                     <li>Save your maps and access them whenever you need.</li>
                 </ul>
                 <button className="startButton" onClick={onButtonClick}>Get Started</button>
-                <p >Site Scout provides its maps and data with help from Google Geocoding services, Open Route Services, and Leaflet.</p>
+                <p>Site Scout provides its maps and data with help from Google Geocoding services, Open Route Services, and Leaflet.</p>
             </div>
         </div>
     )
