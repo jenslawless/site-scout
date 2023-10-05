@@ -5,9 +5,8 @@ import axios from 'axios';
 import { MapSharp } from '@mui/icons-material';
 import { TileLayer, Marker, Polygon, Popup, MapContainer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Grid, Card, CardContent, Typography, IconButton } from '@mui/material';
-
-
+import { Grid, Card, CardContent, Typography, IconButton, Button } from '@mui/material';
+import { NavLink } from 'react-router-dom'
 
 export default function MyMaps() {
     const { user, isLoaded } = useUser();
@@ -26,10 +25,8 @@ export default function MyMaps() {
     }, []);
 
     const handleDeleteMap = (mapId) => {
-        // Make an API call to delete the map from the backend
         axios.delete(`/api/geocode/${mapId}`)
             .then((response) => {
-                // If deletion was successful, update the frontend state
                 setMyMaps((prevMaps) => prevMaps.filter((map) => map.id !== mapId));
             })
             .catch((error) => {
@@ -54,13 +51,13 @@ export default function MyMaps() {
                             sx={{
                                 border: '2px solid #646cff',
                                 borderRadius: '8px',
-                                width: '100%', // Adjust the width as needed
-                                height: '100%', // Adjust the height as needed
+                                width: '100%',
+                                height: '100%',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                justifyContent: 'center', // Center content vertically
-                                alignItems: 'center', // Center content horizontally
-                                textAlign: 'center', // Center text
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                textAlign: 'center',
                             }}
                         >
                             <CardContent>
@@ -77,6 +74,9 @@ export default function MyMaps() {
                                 >
                                     Delete
                                 </button>
+                                <Button component={NavLink} to={`/indi/${single_map.id}`}>
+                                    Explore This Map
+                                </Button>
                             </CardContent>
                         </Card>
                     </Grid>

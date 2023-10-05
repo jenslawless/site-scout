@@ -44,26 +44,6 @@ class Address(db.Model, SerializerMixin):
 
 
 
-# class User(db.Model, SerializerMixin):
-#     __tablename__ = "users"
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     username = db.Column(db.String)
-#     _password_hash = db.Column(db.String)
-
-# class SavedMaps(db.Model, SerializerMixin):
-
-#     __tablename__ = "saved_maps"
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.String)
-#     address = db.Column(db.String)
-#     center = db.Column(Geometry('POINT', srid=4326))
-#     isochrone = db.Column(Geometry('POLYGON', srid=4326))
-#     time_chosen = db.Column(db.Integer)
-
-
-
 
 
 

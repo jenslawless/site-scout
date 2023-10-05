@@ -18,6 +18,7 @@ import {
   SignOutButton,
   ClerkLoaded
 } from "@clerk/clerk-react";
+import IndiMap from './pages/IndiMap';
 
 if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
@@ -39,6 +40,7 @@ function App() {
                   <Route index element={<Home />} />
                   <Route path='/my-maps' element={<MyMaps />} />
                   <Route path='/create-new' element={<NewMap />} />
+                  <Route path='/indi/:mapId' element={<IndiMap />} />
                 </Routes>
               </main>
             </div>
