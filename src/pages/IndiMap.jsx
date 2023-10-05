@@ -10,33 +10,33 @@ import { useParams } from 'react-router-dom'
 
 
 export default function IndiMap() {
-    // const { user, isLoaded, isSignedIn } = useUser();
-    // const { sessionId } = useAuth();
-    // const { mapId } = useParams();
-    // const [indiMap, setIndiMap] = useState({});
+    const { user, isLoaded, isSignedIn } = useUser();
+    const { sessionId } = useAuth();
+    const { mapId } = useParams();
+    const [indiMap, setIndiMap] = useState({});
 
-    // if (!isLoaded || !isSignedIn) {
-    //     return null;
-    // }
+    if (!isLoaded || !isSignedIn) {
+        return null;
+    }
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await axios.get(`/api/geocode/${mapId}`);
-    //             if (response.data) {
-    //                 const mapDataObj = JSON.parse(response.data);
-    //                 setIndiMap(mapDataObj);
-    //             } else {
-    //                 console.log('Data not found'); // Handle the case where data is not found
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching map data:', error);
-    //             alert('An error occurred while fetching map data.');
-    //         }
-    //     };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/geocode/${mapId}`);
+                if (response.data) {
+                    const mapDataObj = JSON.parse(response.data);
+                    setIndiMap(mapDataObj);
+                } else {
+                    console.log('Data not found'); // Handle the case where data is not found
+                }
+            } catch (error) {
+                console.error('Error fetching map data:', error);
+                alert('An error occurred while fetching map data.');
+            }
+        };
 
-    //     fetchData(); // Call the async function to fetch data
-    // }, [mapId]);
+        fetchData(); // Call the async function to fetch data
+    }, [mapId]);
 
     return (
         <div>
