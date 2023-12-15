@@ -1,8 +1,8 @@
 """Initial Migration
 
-Revision ID: f48c45eeb1eb
+Revision ID: ce05323b1a0f
 Revises: 
-Create Date: 2023-08-08 10:08:40.232885
+Create Date: 2023-12-14 21:22:16.593196
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ from sqlalchemy.dialects import postgresql
 import geoalchemy2
 
 # revision identifiers, used by Alembic.
-revision = 'f48c45eeb1eb'
+revision = 'ce05323b1a0f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,7 +33,7 @@ def upgrade():
     #     batch_op.create_index('idx_addresses_isochrone', ['isochrone'], unique=False, postgresql_using='gist')
 
     # op.drop_table('spatial_ref_sys')
-    # # ### end Alembic commands ###
+    # ### end Alembic commands ###
 
 
 def downgrade():

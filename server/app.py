@@ -21,7 +21,7 @@ from shapely import wkt
 API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 ORS_API_KEY=os.environ.get('ORS_API_KEY')
 
-DATABASE_URI = 'postgresql://jenslaw:Mandy007!@localhost:5432/site_scout_1'
+DATABASE_URI = 'postgresql://jenslawless:Mandy007!@localhost:5432/site_scout_1'
 engine = create_engine(DATABASE_URI)
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -33,6 +33,8 @@ class GeocodeAddress(Resource):
         travel_time = data.get('time')
         get_user = data.get('user_id')
 
+        print(data)
+
         if not address:
             return {'error': 'Address parameter is missing.'}, 400
         
@@ -43,13 +45,14 @@ class GeocodeAddress(Resource):
 
         base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
         response = requests.get(base_url, params=params)
-        
+        print(response)
         # # i think this is causing the error   
         # "Did not work, try again" 
         # because it is expecting both api calls to come back 
         # as successful but the second one hasn't been initiated yet. 
         if response.status_code == 200:
             data = response.json()
+            print(data)
 
             lat = data['results'][0]['geometry']['location']['lat']
             lng = data['results'][0]['geometry']['location']['lng']

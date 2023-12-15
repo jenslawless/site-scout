@@ -12,7 +12,7 @@ load_dotenv()
 
 # Define metadata, instantiate db
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://jenslaw:Mandy007!@localhost:5432/site_scout_1'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://jenslawless:Mandy007!@localhost:5432/site_scout_1'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.json.compact = False
 

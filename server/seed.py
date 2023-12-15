@@ -10,7 +10,7 @@ from geoalchemy2 import Geometry
 from sqlalchemy.orm import sessionmaker
 
 
-DATABASE_URI = 'postgresql://jenslaw:Mandy007!@localhost:5432/site_scout_1'
+DATABASE_URI = 'postgresql://jenslawless:Mandy007!@localhost:5432/site_scout_1'
 engine = create_engine(DATABASE_URI)
 Session = sessionmaker(bind=engine)
 session = Session()
